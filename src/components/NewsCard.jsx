@@ -35,7 +35,7 @@ const NewsCard = ({ news }) => {
         <img
           src={thumbnail_url}
           alt={title}
-          className="w-full h-48 object-cover rounded-md"
+          className="w-full h-48 md:h-full object-cover rounded-md"
         />
       </div>
 
@@ -69,5 +69,4 @@ const NewsCard = ({ news }) => {
     </div>
   );
 };
-
 export default NewsCard;
