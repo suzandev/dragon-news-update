@@ -7,9 +7,9 @@ const CategoryNews = () => {
 
   let categoryNews = [];
 
-  if (id === "0") {
+  if (id == "0") {
     categoryNews = data;
-  } else if (id === "1") {
+  } else if (id == "1") {
     categoryNews = data.filter((news) => news.others.is_today_pick == true);
   } else {
     categoryNews = data.filter((news) => news.category_id == Number(id));
