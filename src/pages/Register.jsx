@@ -1,10 +1,11 @@
-import { use, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Register = () => {
-  const { createUser, setUser, updateUser } = use(AuthContext);
+  const { createUser, setUser, updateUser } = useContext(AuthContext);
   const [nameError, setNameError] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -28,29 +29,34 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         const loggedUser = result.user;
+
         updateUser({ displayName: name, photoURL: photo })
           .then(() => {
-            setUser({ ...loggedUser, displayName: name, photoURL: photo });
+            setUser({
+              ...loggedUser,
+              displayName: name,
+              photoURL: photo,
+            });
             navigate("/");
           })
-          .catch((error) => {
-            console.log("Error updating user profile:", error);
+          .catch(() => {
             setUser(loggedUser);
           });
-        alert("Registration successful");
+
         form.reset();
       })
       .catch((error) => {
-        console.log(error);
+        setError(error.message);
       });
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl py-5">
-        <h2 className="text-center text-2xl font-semibold ">
+        <h2 className="text-center text-2xl font-semibold">
           Register Your Account
         </h2>
+
         <form className="card-body" onSubmit={handleRegister}>
           <fieldset className="fieldset">
             <label className="label">Name</label>
@@ -68,7 +74,7 @@ const Register = () => {
               name="photo"
               type="text"
               className="input"
-              placeholder="12345"
+              placeholder="Photo URL"
               required
             />
 
@@ -90,9 +96,12 @@ const Register = () => {
               required
             />
 
+            {error && <p className="text-red-600 text-xs">{error}</p>}
+
             <button type="submit" className="btn btn-neutral mt-4">
               Register
             </button>
+
             <p className="text-center mt-4">
               Already have an account?{" "}
               <Link
