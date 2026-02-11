@@ -15,7 +15,7 @@ const Navbar = () => {
       });
   };
   return (
-    <div className="flex justify-between items-center w-11/12 mx-auto">
+    <div className="flex flex-col md:flex-row justify-between items-center  w-11/12 mx-auto ">
       <div className="">{user && user.email}</div>
       <div className="nav flex gap-5 text-accent font-semibold">
         <NavLink to="/">Home</NavLink>
@@ -30,7 +30,9 @@ const Navbar = () => {
         />
 
         {user ? (
-          <button className="btn btn-primary px-10" onClick={handleLogout}>
+          <button
+            className="btn btn-primary px-5 md:px-10"
+            onClick={handleLogout}>
             Logout
           </button>
         ) : (
